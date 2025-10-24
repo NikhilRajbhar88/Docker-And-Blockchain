@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  user-service:
+    image: user-service:1.0
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+  order-service:
+    image: order-service:1.0
+    build: ./order-service
+    ports:
+      - "8082:8082"
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
