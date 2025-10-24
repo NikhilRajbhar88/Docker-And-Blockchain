@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "5000:5000"
+    networks:
+      - microservices-network
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "5001:5001"
+    networks:
+      - microservices-network
+
+  blockchain-service:
+    build: ./blockchain-service
+    container_name: blockchain-service
+    ports:
+      - "5002:5002"
+    networks:
+      - microservices-network
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user-service
+      - product-service
+      - blockchain-service
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
